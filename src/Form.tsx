@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
+import { useTasks } from "./lib/TaskContext";
+
 const Form: React.FC = () => {
   const [title, setTitle] = useState<string>("");
   const [body, setBody] = useState<string>("");
+  const [_, setTasks] = useTasks();
 
   const createTask = async () => {
     // title & body must have a value
@@ -24,8 +27,16 @@ const Form: React.FC = () => {
         data
       );
 
-      if (response.status === 200) toast.success("Success!");
-      else throw new Error("Something went wrong!");
+      if (response.status === 200) {
+        toast.success("Success!");
+
+        const id = response.data.todo.id;
+        setTasks((prevTaskVal) => [...prevTaskVal, { ...data, id }]);
+
+        // clear fields
+        setTitle("");
+        setBody("");
+      } else throw new Error("Something went wrong!");
     } catch (error) {
       toast.error(`${error}`);
     }
