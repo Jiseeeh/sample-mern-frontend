@@ -1,11 +1,10 @@
 import React from "react";
 
-interface CardProps {
-  title: string;
-  body: string;
-}
+import Task from "../interfaces/ITask";
 
-const Card: React.FC<CardProps> = (props) => {
+const Card: React.FC<Task> = (props) => {
+  const cardId = props.id;
+
   return (
     <div className="card md:w-96 bg-base-100 shadow-xl">
       <div className="card-body">
