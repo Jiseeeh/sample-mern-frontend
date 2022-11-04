@@ -1,5 +1,6 @@
 import Navbar from "./Navbar";
 import illustration from "./assets/illustration.svg";
+import Form from "./Form";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         src={illustration}
         alt="illustration of people having a conversation"
       />
+      <Form />
     </main>
   );
 }
