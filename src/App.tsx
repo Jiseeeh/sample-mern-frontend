@@ -7,7 +7,7 @@ function App() {
     <main className="flex flex-col items-center min-h-screen">
       <Navbar />
       <Form />
-      <section className="mb-5 grid md:grid-cols-3 md:gap-8">
+      <section className="mb-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3 lg:gap-8">
         <Card title="Short Title" body="Short Body" />
         <Card title="Short Title" body="Short Body" />
         <Card title="Short Title" body="Short Body" />
