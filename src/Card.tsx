@@ -7,7 +7,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = (props) => {
   return (
-    <div className="card w-96 bg-base-100 shadow-xl">
+    <div className="card md:w-96 bg-base-100 shadow-xl">
       <div className="card-body">
         <input
           type="text"
