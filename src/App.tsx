@@ -1,17 +1,21 @@
 import Navbar from "./Navbar";
-import illustration from "./assets/illustration.svg";
 import Form from "./Form";
+import Card from "./Card";
 
 function App() {
   return (
     <main className="flex flex-col items-center min-h-screen">
       <Navbar />
-      <img
-        className="my-5 sm:max-w-md aspect-[3/3]"
-        src={illustration}
-        alt="illustration of people having a conversation"
-      />
       <Form />
+      <section className="mb-5 grid md:grid-cols-3 md:gap-8">
+        <Card title="Short Title" body="Short Body" />
+        <Card title="Short Title" body="Short Body" />
+        <Card title="Short Title" body="Short Body" />
+        <Card
+          title="Long Title Long Long Long Long Long Long Long Long Long Long "
+          body="Long Body Long Body Long Body Long Body Long Body Long Body"
+        />
+      </section>
     </main>
   );
 }
