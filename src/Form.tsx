@@ -9,7 +9,8 @@ const Form: React.FC = () => {
   const [body, setBody] = useState<string>("");
   const [, setTasks] = useTasks();
 
-  const createTask = async () => {
+  const createTask = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     // title & body must have a value
     if (!title || !body) {
       toast.error("Please input properly!");
@@ -46,7 +47,7 @@ const Form: React.FC = () => {
   };
 
   return (
-    <section className="mb-4 form-control">
+    <form className="mb-4 form-control" onSubmit={createTask}>
       <label className="label">
         <span className="label-text">Task title</span>
       </label>
@@ -77,10 +78,8 @@ const Form: React.FC = () => {
           }}
         />
       </label>
-      <button className="m-5 btn btn-ghost" onClick={createTask}>
-        Create
-      </button>
-    </section>
+      <button className="m-5 btn btn-ghost">Create</button>
+    </form>
   );
 };
 
