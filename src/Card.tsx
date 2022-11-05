@@ -1,22 +1,39 @@
 import React, { useState } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 import Task from "../interfaces/ITask";
+import { useTasks } from "./lib/TaskContext";
 
 const Card: React.FC<Task> = (props) => {
   const taskId = props.id;
   const [title, setTitle] = useState(props.title);
   const [body, setBody] = useState(props.body);
+  const [, setTasks] = useTasks();
 
-  const handleUpdate = async () => {
+  const handleUpdate = () => {
     const data = { title, body };
 
-    const response = await axios.patch(
+    setTasks((prevTaskVal) => {
+      prevTaskVal.forEach((task) => {
+        if (task.id === taskId) {
+          task.title = data.title;
+          task.body = data.body;
+        }
+      });
+      return prevTaskVal;
+    });
+
+    const response = axios.patch(
       `${import.meta.env.VITE_API_URL}/todos/${taskId}`,
       data
     );
 
-    console.log(response.data);
+    toast.promise(response, {
+      loading: "Updating your task in the cloud",
+      error: "Something went wrong!",
+      success: "Update success!",
+    });
   };
 
   const handleDelete = async () => {
@@ -26,6 +43,7 @@ const Card: React.FC<Task> = (props) => {
 
     console.log(response.data);
   };
+
   return (
     <div className="card md:w-96 bg-base-100 shadow-xl">
       <div className="card-body">
