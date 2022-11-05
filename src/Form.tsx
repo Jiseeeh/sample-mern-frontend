@@ -7,6 +7,7 @@ import { useTasks } from "./lib/TaskContext";
 const Form: React.FC = () => {
   const [title, setTitle] = useState<string>("");
   const [body, setBody] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [, setTasks] = useTasks();
 
   const createTask = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -17,6 +18,7 @@ const Form: React.FC = () => {
       return;
     }
 
+    setIsLoading(true);
     const toastId = toast.loading("Creating task in the cloud");
 
     const data = {
@@ -31,6 +33,7 @@ const Form: React.FC = () => {
       );
 
       if (response.status === 200) {
+        setIsLoading(false);
         toast.dismiss(toastId);
         toast.success("Create success!");
 
@@ -78,7 +81,11 @@ const Form: React.FC = () => {
           }}
         />
       </label>
-      <button className="m-5 btn btn-ghost">Create</button>
+      <button
+        className={`m-5 btn btn-ghost ${isLoading ? "btn-disabled" : ""}`}
+      >
+        Create
+      </button>
     </form>
   );
 };
