@@ -21,6 +21,8 @@ const Form: React.FC = () => {
       body,
     };
 
+    const toastId = toast.loading("Creating task in the cloud");
+
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}/todos`,
@@ -28,7 +30,8 @@ const Form: React.FC = () => {
       );
 
       if (response.status === 200) {
-        toast.success("Success!");
+        toast.dismiss(toastId);
+        toast.success("Create success!");
 
         const id = response.data.todo.id;
         setTasks((prevTaskVal) => [...prevTaskVal, { ...data, id }]);
