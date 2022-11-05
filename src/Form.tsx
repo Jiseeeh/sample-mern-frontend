@@ -16,12 +16,12 @@ const Form: React.FC = () => {
       return;
     }
 
+    const toastId = toast.loading("Creating task in the cloud");
+
     const data = {
       title,
       body,
     };
-
-    const toastId = toast.loading("Creating task in the cloud");
 
     try {
       const response = await axios.post(
@@ -44,6 +44,7 @@ const Form: React.FC = () => {
       toast.error(`${error}`);
     }
   };
+
   return (
     <section className="mb-4 form-control">
       <label className="label">
