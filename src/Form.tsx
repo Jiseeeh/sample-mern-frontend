@@ -7,7 +7,7 @@ import { useTasks } from "./lib/TaskContext";
 const Form: React.FC = () => {
   const [title, setTitle] = useState<string>("");
   const [body, setBody] = useState<string>("");
-  const [_, setTasks] = useTasks();
+  const [, setTasks] = useTasks();
 
   const createTask = async () => {
     // title & body must have a value
