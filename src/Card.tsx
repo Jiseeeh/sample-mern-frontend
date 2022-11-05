@@ -36,12 +36,20 @@ const Card: React.FC<Task> = (props) => {
     });
   };
 
-  const handleDelete = async () => {
-    const response = await axios.delete(
+  const handleDelete = () => {
+    setTasks((prevTasksVal) =>
+      prevTasksVal.filter((task) => task.id !== taskId)
+    );
+
+    const response = axios.delete(
       `${import.meta.env.VITE_API_URL}/todos/${taskId}`
     );
 
-    console.log(response.data);
+    toast.promise(response, {
+      loading: "Syncing delete in the cloud",
+      error: "Something went wrong!",
+      success: "Delete success!",
+    });
   };
 
   return (
