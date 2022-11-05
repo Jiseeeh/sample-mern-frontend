@@ -9,11 +9,13 @@ const Card: React.FC<Task> = (props) => {
   const taskId = props.id;
   const [title, setTitle] = useState(props.title);
   const [body, setBody] = useState(props.body);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [, setTasks] = useTasks();
 
   const handleUpdate = async () => {
     const toastId = toast.loading("Updating your task in the cloud");
     const data = { title, body };
+    setIsLoading(true);
 
     setTasks((prevTaskVal) => {
       prevTaskVal.forEach((task) => {
@@ -33,11 +35,13 @@ const Card: React.FC<Task> = (props) => {
     if (response.status === 200) {
       toast.dismiss(toastId);
       toast.success("Update success");
+      setIsLoading(false);
     }
   };
 
   const handleDelete = async () => {
     const toastId = toast.loading("Syncing delete in the cloud");
+    setIsLoading(true);
 
     setTasks((prevTasksVal) =>
       prevTasksVal.filter((task) => task.id !== taskId)
@@ -50,6 +54,7 @@ const Card: React.FC<Task> = (props) => {
     if (response.status === 200) {
       toast.dismiss(toastId);
       toast.success("Delete success");
+      setIsLoading(false);
     }
   };
 
@@ -74,10 +79,16 @@ const Card: React.FC<Task> = (props) => {
           }}
         ></textarea>
         <div className="card-actions justify-end">
-          <button className="btn btn-primary" onClick={handleUpdate}>
+          <button
+            className={`btn btn-primary ${isLoading ? "btn-disabled" : ""}`}
+            onClick={handleUpdate}
+          >
             Update
           </button>
-          <button className="btn btn-error" onClick={handleDelete}>
+          <button
+            className={`btn btn-error ${isLoading ? "btn-disabled" : ""}`}
+            onClick={handleDelete}
+          >
             Delete
           </button>
         </div>
